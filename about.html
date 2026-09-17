@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>من نحن | مشروع ترشيد الطاقة</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(180deg, #0b132b, #1c2541, #3a506b);
+            color: #fff;
+            min-height: 100vh;
+            text-align: right;
+            padding: 10px 10px 60px 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 13px;
+        }
+        
+        /* الشريط العلوي على اليسار - أصغر وأبسط */
+        .top-controls {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background: rgba(11, 19, 43, 0.95);
+            padding: 8px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+            border: 1.5px solid #ffd166;
+            backdrop-filter: blur(10px);
+            width: 150px;
+        }
+        
+        .music-btn, .lang-btn-ar, .lang-btn-en {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 6px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            justify-content: flex-start;
+            font-size: 12px;
+            position: relative;
+            overflow: hidden;
+            min-height: 32px;
+        }
+        
+        .music-btn {
+            background: linear-gradient(135deg, #ef476f, #ff9e00);
+        }
+        
+        .music-btn:hover, .music-btn.active {
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 3px 8px rgba(239, 71, 111, 0.4);
+        }
+        
+        .music-btn:active, .lang-btn-ar:active, .lang-btn-en:active {
+            transform: translateY(0) scale(0.98);
+            transition: transform 0.1s;
+        }
+        
+        .lang-btn-ar {
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+        }
+        
+        .lang-btn-ar.active {
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            box-shadow: 0 3px 8px rgba(13, 71, 161, 0.4);
+        }
+        
+        .lang-btn-en {
+            background: linear-gradient(135deg, #0b132b, #3a506b);
+        }
+        
+        .lang-btn-en.active {
+            background: linear-gradient(135deg, #1c2541, #5bc0be);
+            box-shadow: 0 3px 8px rgba(6, 214, 160, 0.4);
+        }
+        
+        .lang-btn-ar:hover, .lang-btn-en:hover {
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        .lang-btn-ar:hover {
+            box-shadow: 0 3px 8px rgba(13, 71, 161, 0.4);
+        }
+        
+        .lang-btn-en:hover {
+            box-shadow: 0 3px 8px rgba(6, 214, 160, 0.4);
+        }
+        
+        /* الساعة على اليسار - تأثير هوفر جميل */
+        .clock-container {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(11, 19, 43, 0.9);
+            padding: 8px 10px;
+            border-radius: 12px;
+            border: 1.5px solid #06d6a0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            min-width: 130px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+        
+        .clock-container:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(6, 214, 160, 0.5);
+            border-color: #ffd166;
+            background: rgba(11, 19, 43, 0.95);
+        }
+        
+        .clock-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 209, 102, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+        
+        .clock-container:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .clock {
+            font-family: 'Tajawal', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffd166;
+            text-align: center;
+            direction: ltr;
+            transition: all 0.3s;
+        }
+        
+        .clock-container:hover .clock {
+            color: #ef476f;
+            text-shadow: 0 0 10px rgba(239, 71, 111, 0.5);
+            transform: scale(1.05);
+        }
+        
+        .clock-date {
+            font-size: 10px;
+            color: #06d6a0;
+            margin-top: 2px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .clock-container:hover .clock-date {
+            color: #ffd166;
+            transform: scale(1.05);
+        }
+        
+        .clock-period {
+            font-size: 10px;
+            color: #ef476f;
+            margin-top: 1px;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .clock-container:hover .clock-period {
+            color: #06d6a0;
+            transform: scale(1.05);
+        }
+        
+        /* الحاوية الرئيسية */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 15px 10px;
+        }
+        
+        /* زر العودة - أصغر */
+        .back-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #ffd166, #ff9e00);
+            color: #0b132b;
+            padding: 6px 12px;
+            border-radius: 18px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 3px 6px rgba(255, 209, 102, 0.3);
+            border: 1.5px solid transparent;
+            font-size: 13px;
+        }
+        
+        .back-btn:hover {
+            background: linear-gradient(135deg, #ef476f, #ff6b6b);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(239, 71, 111, 0.4);
+            border-color: #ffd166;
+        }
+        
+        .back-btn:active {
+            transform: translateY(0);
+            transition: transform 0.1s;
+        }
+        
+        /* العنوان الرئيسي - أصغر */
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            margin-top: 25px;
+        }
+        
+        .main-title {
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #ffd166, #ef476f, #06d6a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .sub-title {
+            color: #06d6a0;
+            font-size: 1rem;
+            font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        /* القسم الشخصي - أصغر */
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #ffd166;
+            box-shadow: 0 6px 20px rgba(255, 209, 102, 0.3);
+            cursor: pointer;
+            transition: all 0.4s;
+            position: relative;
+        }
+        
+        .profile-img:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 10px 30px rgba(255, 209, 102, 0.5);
+            border-color: #ef476f;
+        }
+        
+        .profile-img:active {
+            transform: scale(0.98) rotate(0deg);
+            transition: transform 0.2s;
+        }
+        
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .profile-img:hover img {
+            transform: scale(1.1);
+        }
+        
+        .profile-info {
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .profile-name {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+            background: linear-gradient(90deg, #ffd166, #ef476f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 3px 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .profile-title {
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+            line-height: 1.4;
+            color: #06d6a0;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .profile-description {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 15px;
+            border-radius: 10px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            border-right: 3px solid #ffd166;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .profile-description:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.12);
+            border-right-color: #ef476f;
+        }
+        
+        .profile-description:active {
+            transform: translateY(0);
+            transition: transform 0.1s;
+        }
+        
+        /* تحسينات النص مع الألوان */
+        .highlight-box {
+            background: rgba(255, 209, 102, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+            margin: 12px 0;
+            border-right: 2px solid #ffd166;
+            transition: all 0.3s;
+        }
+        
+        .highlight-box:hover {
+            background: rgba(255, 209, 102, 0.15);
+            transform: translateX(-4px);
+        }
+        
+        .text-gold {
+            color: #ffd166 !important;
+            font-weight: bold;
+        }
+        
+        .text-green {
+            color: #06d6a0 !important;
+            font-weight: bold;
+        }
+        
+        .text-pink {
+            color: #ef476f !important;
+            font-weight: bold;
+        }
+        
+        .text-blue {
+            color: #5bc0be !important;
+            font-weight: bold;
+        }
+        
+        /* تصميم متجاوب - تحسينات للعرض 100% */
+        @media (max-width: 992px) {
+            .top-controls {
+                top: 8px;
+                left: 8px;
+                width: 140px;
+                padding: 7px;
+            }
+            
+            .clock-container {
+                left: 8px;
+                bottom: 8px;
+                padding: 6px 8px;
+                min-width: 120px;
+            }
+            
+            .clock {
+                font-size: 13px;
+            }
+            
+            .clock-date, .clock-period {
+                font-size: 9px;
+            }
+            
+            .container {
+                max-width: 95%;
+            }
+            
+            .profile-img {
+                width: 140px;
+                height: 140px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .top-controls {
+                flex-direction: column;
+                width: 140px;
+                top: 8px;
+                left: 8px;
+                transform: none;
+            }
+            
+            .music-btn, .lang-btn-ar, .lang-btn-en {
+                font-size: 11px;
+                padding: 5px 6px;
+                min-height: 30px;
+            }
+            
+            .clock-container {
+                position: relative;
+                margin: 20px auto;
+                left: auto;
+                bottom: auto;
+                width: 90%;
+                max-width: 240px;
+            }
+            
+            .clock-container:hover {
+                transform: translateY(-3px) scale(1.03);
+            }
+            
+            body {
+                padding: 70px 8px 30px 8px;
+                font-size: 12px;
+            }
+            
+            .container {
+                padding: 12px 8px;
+            }
+            
+            .back-btn {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 12px;
+                display: inline-flex;
+                align-self: flex-end;
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+            
+            .header {
+                margin-top: 12px;
+                margin-bottom: 20px;
+            }
+            
+            .main-title {
+                font-size: 1.5rem;
+            }
+            
+            .sub-title {
+                font-size: 0.95rem;
+            }
+            
+            .profile-img {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .profile-name {
+                font-size: 1.4rem;
+            }
+            
+            .profile-description {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .top-controls {
+                width: 130px;
+                padding: 6px;
+            }
+            
+            .main-title {
+                font-size: 1.4rem;
+            }
+            
+            .profile-img {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .profile-name {
+                font-size: 1.3rem;
+            }
+            
+            .profile-title {
+                font-size: 0.9rem;
+            }
+            
+            .clock-container {
+                padding: 5px 6px;
+                min-width: 110px;
+            }
+            
+            .clock {
+                font-size: 12px;
+            }
+            
+            .clock-date, .clock-period {
+                font-size: 8px;
+            }
+            
+            .back-btn {
+                font-size: 11px;
+                padding: 4px 8px;
+            }
+        }
+        
+        /* تعديلات خاصة للعرض 100% في Google Chrome */
+        @media screen and (max-width: 1200px) and (min-width: 993px) {
+            .container {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- الشريط العلوي في الزاوية اليسرى العليا -->
+<div class="top-controls">
+    <button class="lang-btn-ar active" id="arabicBtn">
+        <i class="fas fa-language"></i>
+        <span id="arabicText">العربية</span>
+    </button>
+    
+    <button class="lang-btn-en" id="englishBtn">
+        <i class="fas fa-globe"></i>
+        <span id="englishText">English</span>
+    </button>
+    
+    <button class="music-btn" id="musicBtn">
+        <i class="fas fa-music"></i>
+        <span id="musicText">تشغيل الموسيقى</span>
+    </button>
+</div>
+
+<!-- الساعة على اليسار - مع تأثير هوفر جميل -->
+<div class="clock-container" id="clockContainer">
+    <div class="clock" id="clock">12:00:00</div>
+    <div class="clock-period" id="period">PM</div>
+    <div class="clock-date" id="date">الاثنين ١ يناير ٢٠٢٤</div>
+</div>
+
+<div class="container">
+    
+    <!-- زر العودة للصفحة الرئيسية -->
+    <a href="index.html" class="back-btn" id="backBtn">
+        <i class="fas fa-arrow-right"></i> <span id="backText">العودة للصفحة الرئيسية</span>
+    </a>
+    
+    <!-- العنوان الرئيسي -->
+    <div class="header">
+        <h1 class="main-title" id="mainTitle">
+            من نحن
+        </h1>
+        <p class="sub-title" id="subTitle">تعرف على صاحب مشروع ترشيد الطاقة</p>
+    </div>
+    
+    <!-- القسم الشخصي -->
+    <div class="profile-section">
+        <!-- الصورة الشخصية -->
+        <div class="profile-img" id="profileImgContainer">
+            <img src="صورة.png" alt="أسامة مسعود" id="profilePhoto" onerror="this.src='https://via.placeholder.com/150x150/0b132b/ffd166?text=Osama+Masoud'">
+        </div>
+        
+        <div class="profile-info">
+            <h2 class="profile-name" id="nameText">أسامة مسعود</h2>
+            <div class="profile-title" id="titleText">
+                <i class="fas fa-graduation-cap"></i> طالب في الصف الأول الثانوي
+                <br>
+                <i class="fas fa-briefcase"></i> تخصص الوسائط الإبداعية - BTEC
+            </div>
+            
+            <div class="profile-description" id="descriptionText">
+                <div class="highlight-box">
+                    أنا الطالب <span class="text-gold">أسامة مسعود</span>، في الصف الأول الثانوي، أدرس في المسار المهني <span class="text-green">BTEC</span> تخصص الوسائط الإبداعية.
+                </div>
+                
+                <p style="margin-bottom: 12px;">
+                    لدي شغف كبير بالتقنية والتصميم والعمل الإبداعي، وأسعى دائماً إلى تطوير مهاراتي في هذا المجال الممتع والمليء بالإبداع.
+                </p>
+                
+                <div class="highlight-box">
+                    قمت بإنشاء <span class="text-pink">مشروع ترشيد استهلاك الطاقة الكهربائية</span>، إيماناً مني بأهمية المحافظة على الموارد الطبيعية والمساهمة في بناء مستقبل أكثر استدامة.
+                </div>
+                
+                <p>
+                    هدفي من هذا المشروع هو مساعدة الأفراد والعائلات على تقليل استهلاك الكهرباء بطرق بسيطة وفعّالة، ونشر الوعي البيئي في مجتمعنا.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- مشغل الموسيقى -->
+<audio id="backgroundMusic" loop preload="auto">
+    <source src="https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3" type="audio/mpeg">
+    <source src="https://assets.mixkit.co/music/preview/mixkit-chill-hop-01-415.mp3" type="audio/mpeg">
+    <source src="https://assets.mixkit.co/music/preview/mixkit-funky-groove-229.mp3" type="audio/mpeg">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+    متصفحك لا يدعم مشغل الصوت
+</audio>
+
+<script>
+// النصوص العربية
+const arTexts = {
+    mainTitle: "من نحن",
+    subTitle: "تعرف على صاحب مشروع ترشيد الطاقة",
+    name: "أسامة مسعود",
+    title: '<i class="fas fa-graduation-cap"></i> طالب في الصف الأول الثانوي<br><i class="fas fa-briefcase"></i> تخصص الوسائط الإبداعية - BTEC',
+    description: `
+        <div class="highlight-box">
+            أنا الطالب <span class="text-gold">أسامة مسعود</span>، في الصف الأول الثانوي، أدرس في المسار المهني <span class="text-green">BTEC</span> تخصص الوسائط الإبداعية.
+        </div>
+        
+        <p style="margin-bottom: 12px;">
+            لدي شغف كبير بالتقنية والتصميم والعمل الإبداعي، وأسعى دائماً إلى تطوير مهاراتي في هذا المجال الممتع والمليء بالإبداع.
+        </p>
+        
+        <div class="highlight-box">
+            قمت بإنشاء <span class="text-pink">مشروع ترشيد استهلاك الطاقة الكهربائية</span>، إيماناً مني بأهمية المحافظة على الموارد الطبيعية والمساهمة في بناء مستقبل أكثر استدامة.
+        </div>
+        
+        <p>
+            هدفي من هذا المشروع هو مساعدة الأفراد والعائلات على تقليل استهلاك الكهرباء بطرق بسيطة وفعّالة، ونشر الوعي البيئي في مجتمعنا.
+        </p>
+    `,
+    musicPlay: "تشغيل الموسيقى",
+    musicStop: "إيقاف الموسيقى",
+    arabicBtn: "العربية",
+    englishBtn: "إنجليزي",
+    backBtn: '<i class="fas fa-arrow-right"></i> العودة للصفحة الرئيسية'
+};
+
+// النصوص الإنجليزية
+const enTexts = {
+    mainTitle: "About Us",
+    subTitle: "Learn about the owner of the energy efficiency project",
+    name: "Osama Masoud",
+    title: '<i class="fas fa-graduation-cap"></i> First Secondary Grade Student<br><i class="fas fa-briefcase"></i> Creative Media Specialization - BTEC',
+    description: `
+        <div class="highlight-box">
+            I am <span class="text-gold">Osama Masoud</span>, a first secondary grade student, studying in the professional track <span class="text-green">BTEC</span> specializing in Creative Media.
+        </div>
+        
+        <p style="margin-bottom: 12px;">
+            I have a great passion for technology, design, and creative work, and I always strive to develop my skills in this fun and creative field.
+        </div>
+        
+        <div class="highlight-box">
+            I created the <span class="text-pink">Electricity Consumption Rationalization Project</span>, believing in the importance of preserving natural resources and contributing to building a more sustainable future.
+        </div>
+        
+        <p>
+            My goal from this project is to help individuals and families reduce electricity consumption through simple and effective methods, and spread environmental awareness in our society.
+        </p>
+    `,
+    musicPlay: "Play Music",
+    musicStop: "Stop Music",
+    arabicBtn: "Arabic",
+    englishBtn: "English",
+    backBtn: '<i class="fas fa-arrow-left"></i> Back to Main Page'
+};
+
+// حالة الموسيقى واللغة
+let isMusicPlaying = localStorage.getItem('musicPlaying') === 'true';
+let isEnglish = localStorage.getItem('language') === 'en';
+let userInteracted = false;
+
+// تحديث الساعة
+function updateClock() {
+    const now = new Date();
+    const clockElement = document.getElementById('clock');
+    const dateElement = document.getElementById('date');
+    const periodElement = document.getElementById('period');
+    
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const period = hours >= 12 ? 'PM' : 'AM';
+    
+    hours = hours % 12 || 12;
+    const formattedHours = String(hours).padStart(2, '0');
+    
+    const daysAr = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+    const daysEn = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    
+    const monthsAr = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", 
+                     "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+    const monthsEn = ["January", "February", "March", "April", "May", "June", 
+                     "July", "August", "September", "October", "November", "December"];
+    
+    if (isEnglish) {
+        const dayName = daysEn[now.getDay()];
+        const monthName = monthsEn[now.getMonth()];
+        const date = now.getDate();
+        const year = now.getFullYear();
+        
+        clockElement.textContent = `${formattedHours}:${minutes}:${seconds}`;
+        periodElement.textContent = period;
+        dateElement.textContent = `${dayName}, ${monthName} ${date}, ${year}`;
+    } else {
+        const dayName = daysAr[now.getDay()];
+        const monthName = monthsAr[now.getMonth()];
+        const date = now.getDate();
+        const year = now.getFullYear();
+        
+        clockElement.textContent = `${formattedHours}:${minutes}:${seconds}`;
+        periodElement.textContent = period === 'AM' ? 'ص' : 'م';
+        dateElement.textContent = `${dayName} ${date} ${monthName} ${year}`;
+    }
+}
+
+// تحديث جميع النصوص
+function updateTexts() {
+    const texts = isEnglish ? enTexts : arTexts;
+    
+    document.getElementById('mainTitle').textContent = texts.mainTitle;
+    document.getElementById('subTitle').textContent = texts.subTitle;
+    document.getElementById('nameText').textContent = texts.name;
+    document.getElementById('titleText').innerHTML = texts.title;
+    document.getElementById('descriptionText').innerHTML = texts.description;
+    document.getElementById('musicText').textContent = isMusicPlaying ? texts.musicStop : texts.musicPlay;
+    document.getElementById('arabicText').textContent = texts.arabicBtn;
+    document.getElementById('englishText').textContent = texts.englishBtn;
+    document.getElementById('backBtn').innerHTML = texts.backBtn;
+    
+    document.documentElement.dir = isEnglish ? 'ltr' : 'rtl';
+    document.documentElement.lang = isEnglish ? 'en' : 'ar';
+    
+    const arabicBtn = document.getElementById('arabicBtn');
+    const englishBtn = document.getElementById('englishBtn');
+    
+    if (isEnglish) {
+        arabicBtn.classList.remove('active');
+        englishBtn.classList.add('active');
+    } else {
+        arabicBtn.classList.add('active');
+        englishBtn.classList.remove('active');
+    }
+    
+    updateClock();
+}
+
+// تشغيل الموسيقى - بسيط وفعال
+async function playMusic() {
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    
+    if (!backgroundMusic) {
+        console.error("Music element not found!");
+        return;
+    }
+    
+    try {
+        // إعادة تعيين الوقت إلى البداية
+        backgroundMusic.currentTime = 0;
+        
+        // تشغيل الموسيقى مباشرة
+        await backgroundMusic.play();
+        
+        // النجاح في التشغيل
+        isMusicPlaying = true;
+        localStorage.setItem('musicPlaying', 'true');
+        document.getElementById('musicBtn').classList.add('active');
+        updateMusicButtonText();
+        
+    } catch (error) {
+        console.log("Error playing music:", error);
+        
+        // محاولة أخرى بعد تأخير
+        setTimeout(async () => {
+            try {
+                await backgroundMusic.play();
+                isMusicPlaying = true;
+                localStorage.setItem('musicPlaying', 'true');
+                document.getElementById('musicBtn').classList.add('active');
+                updateMusicButtonText();
+            } catch (secondError) {
+                console.log("All playback attempts failed:", secondError);
+                // إذا فشلت كل المحاولات، نفترض أن المستخدم يحتاج للتفاعل
+                userInteracted = false;
+            }
+        }, 500);
+    }
+}
+
+// إيقاف الموسيقى
+function stopMusic() {
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    
+    if (backgroundMusic) {
+        backgroundMusic.pause();
+        backgroundMusic.currentTime = 0;
+    }
+    
+    isMusicPlaying = false;
+    localStorage.setItem('musicPlaying', 'false');
+    document.getElementById('musicBtn').classList.remove('active');
+    updateMusicButtonText();
+}
+
+// تحديث نص زر الموسيقى
+function updateMusicButtonText() {
+    const texts = isEnglish ? enTexts : arTexts;
+    document.getElementById('musicText').textContent = isMusicPlaying ? texts.musicStop : texts.musicPlay;
+}
+
+// معالجة تفاعل المستخدم
+function handleUserInteraction() {
+    if (!userInteracted) {
+        userInteracted = true;
+        
+        // إذا كانت الموسيقى مفعلة، حاول تشغيلها
+        if (isMusicPlaying) {
+            playMusic();
+        }
+    }
+}
+
+// تأثير إضافي للساعة عند النقر عليها
+function addClockClickEffect() {
+    const clockContainer = document.getElementById('clockContainer');
+    
+    clockContainer.addEventListener('click', function() {
+        // تأثير اهتزاز بسيط
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = '';
+        }, 100);
+        
+        // تغيير لون الحدود مؤقتاً
+        const originalBorderColor = this.style.borderColor;
+        this.style.borderColor = '#ef476f';
+        setTimeout(() => {
+            this.style.borderColor = originalBorderColor;
+        }, 300);
+    });
+}
+
+// تهيئة الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    const musicBtn = document.getElementById('musicBtn');
+    const arabicBtn = document.getElementById('arabicBtn');
+    const englishBtn = document.getElementById('englishBtn');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    
+    // تحميل الإعدادات
+    updateTexts();
+    
+    // تحديث الساعة
+    updateClock();
+    setInterval(updateClock, 1000);
+    
+    // إضافة تأثير النقر على الساعة
+    addClockClickEffect();
+    
+    // تهيئة الموسيقى
+    if (backgroundMusic) {
+        backgroundMusic.volume = 0.6;
+        backgroundMusic.muted = false;
+        backgroundMusic.autoplay = false;
+        backgroundMusic.preload = 'auto';
+    }
+    
+    // زر الموسيقى الرئيسي
+    musicBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // تسجيل تفاعل المستخدم
+        userInteracted = true;
+        
+        if (isMusicPlaying) {
+            stopMusic();
+        } else {
+            playMusic();
+        }
+    });
+    
+    // أزرار اللغة
+    arabicBtn.addEventListener('click', function() {
+        if (isEnglish) {
+            isEnglish = false;
+            localStorage.setItem('language', 'ar');
+            updateTexts();
+        }
+    });
+    
+    englishBtn.addEventListener('click', function() {
+        if (!isEnglish) {
+            isEnglish = true;
+            localStorage.setItem('language', 'en');
+            updateTexts();
+        }
+    });
+    
+    // تشغيل الموسيقى إذا كانت مفعلة سابقاً
+    window.addEventListener('load', function() {
+        setTimeout(() => {
+            if (localStorage.getItem('musicPlaying') === 'true') {
+                isMusicPlaying = true;
+                document.getElementById('musicBtn').classList.add('active');
+                updateMusicButtonText();
+                
+                // محاولة تشغيل الموسيقى تلقائياً
+                playMusic();
+            }
+        }, 1000);
+    });
+    
+    // تفعيل الموسيقى عند النقر في أي مكان
+    document.addEventListener('click', function(e) {
+        // تفعيل عند النقر في أي مكان على الصفحة
+        if (!userInteracted) {
+            userInteracted = true;
+            
+            // إذا كانت الموسيقى مفعلة، حاول تشغيلها
+            if (isMusicPlaying) {
+                playMusic();
+            }
+        }
+    });
+    
+    // تأثيرات دخول الصفحة
+    document.body.style.opacity = 0;
+    setTimeout(() => {
+        document.body.style.opacity = 1;
+        document.body.style.transition = 'opacity 0.5s ease-in';
+    }, 100);
+});
+
+// إضافة تأثيرات CSS إضافية للساعة
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(239, 71, 111, 0.7); }
+        70% { box-shadow: 0 0 0 5px rgba(239, 71, 111, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(239, 71, 111, 0); }
+    }
+    
+    .profile-img::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: linear-gradient(45deg, transparent, rgba(255, 209, 102, 0.2), transparent);
+        transition: all 0.5s;
+    }
+    
+    .profile-img:hover::after {
+        transform: rotate(180deg);
+    }
+    
+    .music-btn.active {
+        animation: pulse 2s infinite;
+    }
+    
+    /* تأثيرات إضافية للساعة */
+    .clock-container {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    }
+    
+    .clock-container:hover {
+        transform: translateY(-5px) scale(1.05) !important;
+        box-shadow: 0 8px 25px rgba(6, 214, 160, 0.5) !important;
+    }
+    
+    .clock-container:hover .clock {
+        animation: clockGlow 1.5s infinite alternate;
+    }
+    
+    @keyframes clockGlow {
+        from { text-shadow: 0 0 5px rgba(239, 71, 111, 0.5); }
+        to { text-shadow: 0 0 15px rgba(239, 71, 111, 0.8); }
+    }
+    
+    /* تحسينات النصوص الملونة */
+    p strong, .highlight-box strong {
+        background: linear-gradient(90deg, #ffd166, #ef476f);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: bold;
+    }
+    
+    /* تأثير على أزرار اللغة النشطة */
+    .lang-btn-ar.active, .lang-btn-en.active {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .lang-btn-ar.active::after, .lang-btn-en.active::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+    }
+    
+    /* تحسينات للعرض 100% */
+    html, body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>
